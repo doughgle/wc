@@ -5,6 +5,7 @@ ccwc - A simple version of wc that counts bytes, lines, or words in a file.
 Usage:
     ccwc -c <file>
     ccwc -l <file>
+    ccwc -m <file>
     ccwc -w <file>
 
 Options:
@@ -15,7 +16,7 @@ Options:
 """
 
 from docopt import docopt
-
+import locale
 
 def read_file(file_path, mode='rb'):
     try:
@@ -33,6 +34,10 @@ def count_lines(file_content):
 
 def count_words(file_content):
     return len(file_content.split())
+
+def count_characters(filename):
+    with open(filename, 'rb') as file:
+        return len(file.read().decode('utf-8'))
 
 def main():
         arguments = docopt(__doc__)
@@ -53,6 +58,9 @@ def main():
             if file_content is not None:
                 line_count = count_lines(file_content)
                 print(f"{line_count} {file_path}")
+        elif arguments['-m']:
+            character_count = count_characters(file_path)
+            print(f"{character_count} {file_path}")
 
 if __name__ == '__main__':
     main()
