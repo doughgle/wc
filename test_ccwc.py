@@ -32,3 +32,11 @@ def test_count_unicode_characters(tmp_path):
     result = subprocess.run(['python3', 'ccwc.py', '-m', str(test_file)], capture_output=True, text=True)
     assert result.returncode == 0
     assert result.stdout.strip() == f"15 {test_file}"
+
+def test_no_options(tmp_path):
+    test_file = tmp_path / "test_file.txt"
+    test_file.write_text("Hello, World!\n")
+    
+    result = subprocess.run(['python3', 'ccwc.py', str(test_file)], capture_output=True, text=True)
+    assert result.returncode == 0
+    assert result.stdout.strip() == f"1 2 14 {test_file}"
