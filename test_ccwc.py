@@ -1,5 +1,4 @@
 import subprocess
-import os
 
 def test_count_bytes(tmp_path):
     test_file = tmp_path / "test_file.txt"
