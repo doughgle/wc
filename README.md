@@ -1,35 +1,46 @@
-# README.md
+# ccwc
 
-# ccwc - A Simple Byte Counter
-
-ccwc is a simple command-line utility that counts the number of bytes in a specified file, similar to the Unix `wc` command.
-
-## Features
-
-- Count bytes in a file.
-- Easy to use command-line interface.
+`ccwc` is a simple command-line utility that counts bytes, lines, words, or characters in a file. It is similar to the Unix `wc` command.
 
 ## Usage
 
-To count the bytes in a file, use the following command:
+```sh
+ccwc [options] [FILE]
+
+Options:
+    -c        Count bytes in the file.
+    -l        Count lines in the file.
+    -w        Count words in the file.
+    -m        Count characters in the file.
+    -h --help Show this screen.
+```
+
+
+## Development
+### Prerequisites
++ Python 3.x
++ docopt library
+
+Install the docopt library:
+`pip install docopt`
+
+Running the Script
+
+You can run the script directly from the command line:
+
+```sh
+$ ./ccwc.py -l test.txt
+```
 
 ```
-python src/ccwc.py -c <file>
+7145 test.txt
 ```
 
-## Development Environment
+### Testing
+The tests are written using the unittest framework and subprocess module. The test file is test_ccwc.py.
 
-This project is set up to run in a development container. The container is configured using the files in the `.devcontainer` directory. 
+To run the tests, use the following command:
+`pytest`
 
-### Requirements
-
-- Python 3
-- docopt package
-
-## Installation
-
-To set up the development environment, ensure you have Docker installed and then build the container using the provided Dockerfile.
-
-## Contributing
-
-Feel free to submit issues or pull requests for improvements or bug fixes.
+## License
+This project is licensed under the MIT License.
