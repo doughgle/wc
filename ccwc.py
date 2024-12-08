@@ -41,48 +41,29 @@ def main():
     arguments = docopt(__doc__)
     file_path = arguments['FILE']
     
-    if arguments['-c']:
-        if file_path:
-            file_content = read_file(file_path, 'rb')
-        else:
-            file_content = sys.stdin.buffer.read()
-        if file_content is not None:
+    if file_path:
+        file_content = read_file(file_path, 'rb' if arguments['-c'] or arguments['-m'] else 'r')
+    else:
+        file_content = sys.stdin.buffer.read() if arguments['-c'] or arguments['-m'] else sys.stdin.read()
+    
+    if file_content is not None:
+        if arguments['-c']:
             byte_count = count_bytes(file_content)
             print(f"{byte_count} {file_path or ''}")
-    elif arguments['-w']:
-        if file_path:
-            file_content = read_file(file_path, 'r')
-        else:
-            file_content = sys.stdin.read()
-        if file_content is not None:
+        elif arguments['-w']:
             word_count = count_words(file_content)
             print(f"{word_count} {file_path or ''}")
-    elif arguments['-l']:
-        if file_path:
-            file_content = read_file(file_path, 'r')
-        else:
-            file_content = sys.stdin.read()
-        if file_content is not None:
+        elif arguments['-l']:
             line_count = count_lines(file_content)
             print(f"{line_count} {file_path or ''}")
-    elif arguments['-m']:
-        if file_path:
-            file_content = read_file(file_path, 'rb')
-        else:
-            file_content = sys.stdin.buffer.read()
-        if file_content is not None:
+        elif arguments['-m']:
             char_count = count_characters(file_content)
             print(f"{char_count} {file_path or ''}")
-    else:
-        if file_path:
-            file_content = read_file(file_path, 'rb')
         else:
-            file_content = sys.stdin.buffer.read()
-        if file_content is not None:
             line_count = count_lines(file_content)
             word_count = count_words(file_content)
-            char_count = count_bytes(file_content)
-            print(f"{line_count} {word_count} {char_count} {file_path or ''}")
+            byte_count = count_bytes(file_content)
+            print(f"{line_count} {word_count} {byte_count} {file_path or ''}")
 
 if __name__ == "__main__":
     main()
